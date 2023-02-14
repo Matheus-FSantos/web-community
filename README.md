@@ -1,5 +1,7 @@
 # Sistema Web - Java
 
-Repositório para os commit's das features do sistema web
+Repositório para os commit's das features do sistema web.
 
-Tecnologias: Java, Spring, Hibernate, MySQL e Thymeleaf (+ Sistemas de deploy de WebSite/Banco de dados)
+Integrantes: Matheus Ferreira, Lucas Ryu, Matheus Amaral, Gustavo Aquino.
+
+Tecnologias: Java, Spring ou VRaptor, MVC, MySQL, Hibernate, e Thymeleaf ou JSP (+ Sistemas de deploy de WebSite/Banco de dados)
