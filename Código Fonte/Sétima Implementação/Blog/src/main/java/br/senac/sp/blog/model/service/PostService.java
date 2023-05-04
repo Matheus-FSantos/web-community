@@ -63,10 +63,16 @@ public class PostService {
 		return true;
 	}
 
-	public Post put(Post newPost) {
-		Post post = this.getById(newPost.getId());
-		this.modify(post, newPost);
-		return repository.save(post);
+	public Boolean put(Post newPost) {
+		if(this.getById(newPost.getId()) != null) {
+			Post post = this.getById(newPost.getId());
+			this.modify(post, newPost);
+			repository.save(post);
+			
+			return true;
+		}
+		
+		return false;
 	}
 	
 	private void modify(Post post, Post newPost) {

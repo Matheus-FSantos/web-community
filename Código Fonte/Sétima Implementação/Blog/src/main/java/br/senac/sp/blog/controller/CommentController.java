@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,21 +44,19 @@ public class CommentController {
 	
 	@PostMapping
 	public ResponseEntity<Void> post(@RequestBody Comment newComment){
-		if(commentService.post(newComment) != null) {
+		if(commentService.post(newComment)) {
 			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newComment.getId()).toUri();
 			return ResponseEntity.created(uri).build();
 		}
 		
-		return ResponseEntity.status(406).build();
+		return ResponseEntity.notFound().build();
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> put(@PathVariable Long id, @RequestBody Comment newComment){
 		newComment.updateId(id);
-		if(commentService.put(newComment) != null) 
-			return ResponseEntity.noContent().build();
-
-		return ResponseEntity.status(406).build();
+		HttpStatus status = commentService.put(newComment);
+		return ResponseEntity.status(status).build();
 	}
 	
 	@DeleteMapping("/{id}")

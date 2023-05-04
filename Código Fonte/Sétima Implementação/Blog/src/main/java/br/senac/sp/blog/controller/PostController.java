@@ -43,21 +43,18 @@ public class PostController {
 	
 	@PostMapping
 	public ResponseEntity<Void> post(@RequestBody Post newPost){
-		if(service.post(newPost) != null) {
-			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newPost.getId()).toUri();
-			return ResponseEntity.created(uri).build();
-		}
-		
-		return ResponseEntity.status(406).build();
+		service.post(newPost);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newPost.getId()).toUri();
+		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> put(@PathVariable Long id, @RequestBody Post newPost){
 		newPost.updateId(id);
-		if(service.put(newPost) != null)
+		if(service.put(newPost))
 			return ResponseEntity.noContent().build();
 		
-		return ResponseEntity.status(406).build();
+		return ResponseEntity.notFound().build();
 	}
 	
 	@DeleteMapping("/{id}")

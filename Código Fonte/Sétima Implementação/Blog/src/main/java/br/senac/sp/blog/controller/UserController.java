@@ -43,21 +43,18 @@ public class UserController {
 	
 	@PostMapping
 	public ResponseEntity<User> post(@RequestBody User newUser){
-		if(userService.post(newUser) != null) {
-			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newUser.getId()).toUri();
-			return ResponseEntity.created(uri).build();
-		}
-		
-		return ResponseEntity.status(406).build();
+		userService.post(newUser);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newUser.getId()).toUri();
+		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> put(@PathVariable Long id, @RequestBody User newUser){
 		newUser.updateId(id);
-		if(userService.put(newUser) != null)
+		if(userService.put(newUser))
 			return ResponseEntity.noContent().build();
 		
-		return ResponseEntity.status(406).build();
+		return ResponseEntity.status(404).build();
 	}
 	
 	@DeleteMapping("/{id}")

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import br.senac.sp.blog.model.domain.Comment;
@@ -47,15 +48,20 @@ public class CommentService {
 		return null;
 	}
 
-	public Comment post(Comment newComment) {
-		Date date = Calendar.getInstance().getTime();
+	public Boolean post(Comment newComment) {
+		if(postService.getById(newComment.getPost().getId()) != null) {
+			Date date = Calendar.getInstance().getTime();
+			
+			newComment.updateCreationDate(date);
+			newComment.updateUpdateDate(date);
+			
+			User user = userService.getById(newComment.getAuthor().getId());
+			user.updatePoints(user.getPoints() + 3);
+			commentRepository.save(newComment);
+			return true;
+		}
 		
-		newComment.updateCreationDate(date);
-		newComment.updateUpdateDate(date);
-		
-		User user = userService.getById(newComment.getAuthor().getId());
-		user.updatePoints(user.getPoints() + 3);
-		return commentRepository.save(newComment);
+		return false;
 	}
 
 	public Boolean delete(Long id) {
@@ -71,10 +77,16 @@ public class CommentService {
 		return true;
 	}
 	
-	public Comment put(Comment newComment) {
-		Comment comment = commentRepository.findById(newComment.getId()).get();
-		this.modify(comment, newComment);
-		return commentRepository.save(comment);
+	public HttpStatus put(Comment newComment) {
+		if(commentRepository.findById(newComment.getId()).get() != null) {
+			Comment comment = commentRepository.findById(newComment.getId()).get();
+			this.modify(comment, newComment);
+			commentRepository.save(comment);
+			
+			return HttpStatus.NO_CONTENT;
+		}
+		
+		return HttpStatus.NOT_FOUND;
 	}
 	
 	private void modify(Comment comment, Comment newComment) {

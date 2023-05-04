@@ -45,10 +45,16 @@ public class UserService {
 			
 	}
 	
-	public User put(User newUser) {
-		User user = this.getById(newUser.getId());
-		this.modify(user, newUser);
-		return userRepository.save(user);
+	public Boolean put(User newUser) {
+		if(this.getById(newUser.getId()) != null) {
+			User user = this.getById(newUser.getId());
+			this.modify(user, newUser);
+			userRepository.save(user);
+			
+			return true;
+		}
+		
+		return false;
 	}
 	
 	private void modify(User user, User newUser) {
