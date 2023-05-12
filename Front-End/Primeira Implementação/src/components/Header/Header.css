@@ -1,0 +1,13 @@
+.header-main-container {
+    color: #FFF;
+    background-color: #4a148c;
+    
+    padding: 10px 10px 5px 10px;
+}
+
+.header-title {
+    font-size: 30px;
+    text-align: center;
+
+    font-weight: 500;
+}
