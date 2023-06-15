@@ -12,9 +12,6 @@ public class Documentation {
 
     @Bean
     public Docket swagger() {
-
-        System.out.println("\n\n\n\n\n\n\n\nEntrei aqui\n\n\n\n\n\n\n\n");
-
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())

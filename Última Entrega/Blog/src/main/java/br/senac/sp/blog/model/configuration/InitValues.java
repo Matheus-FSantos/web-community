@@ -29,10 +29,10 @@ public class InitValues {
     ){
         return args -> {
             System.out.println("Salvando Usuários...");
-            User u1 = userService.post(new User(null, "Matheus Ferreira Santos", "matheus.fs.contato@gmail.com", "1234", LocalDateTime.now(), LocalDateTime.now()));
-            User u2 = userService.post(new User(null, "Lucas Ryu Muraoka", "lucasMuraoka@gmail.com", "1234", LocalDateTime.now(), LocalDateTime.now()));
-            User u3 = userService.post(new User(null, "Gustavo Aquino", "gustavoAquino@gmail.com", "1234", LocalDateTime.now(), LocalDateTime.now()));
-            User u4 = userService.post(new User(null, "Matheus Amaral", "matheusAmaral@gmail.com", "1234", LocalDateTime.now(), LocalDateTime.now()));
+            User u1 = userService.post(new User(null, "Matheus Ferreira Santos", "matheus.fs.contato@gmail.com", "1234", true, LocalDateTime.now(), LocalDateTime.now()));
+            User u2 = userService.post(new User(null, "Lucas Ryu Muraoka", "lucasMuraoka@gmail.com", "1234", true, LocalDateTime.now(), LocalDateTime.now()));
+            User u3 = userService.post(new User(null, "Gustavo Aquino", "gustavoAquino@gmail.com", "1234", false, LocalDateTime.now(), LocalDateTime.now()));
+            User u4 = userService.post(new User(null, "Matheus Amaral", "matheusAmaral@gmail.com", "1234", false, LocalDateTime.now(), LocalDateTime.now()));
 
             Category c1 = new Category(null, "E-Sports", LocalDateTime.now(), LocalDateTime.now());
             categoryService.post(c1);

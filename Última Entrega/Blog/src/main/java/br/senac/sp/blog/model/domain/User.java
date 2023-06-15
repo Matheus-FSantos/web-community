@@ -29,7 +29,7 @@ public class User implements Serializable, Comparable<User> {
 	@Column(length = 160, unique=true, nullable=false)
 	private String mail;
 	
-	@Column(length = 30)
+	@Column(length = 60)
 	private String password;
 
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -39,6 +39,8 @@ public class User implements Serializable, Comparable<User> {
 	private LocalDateTime updateDate;
 	
 	private Long points;
+
+	private Boolean admin;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy="author", orphanRemoval=true)
@@ -50,11 +52,12 @@ public class User implements Serializable, Comparable<User> {
 	
 	public User() {}
 	
-	public User(Long id, String name, String mail, String password, LocalDateTime creationDate, LocalDateTime updateDate) {
+	public User(Long id, String name, String mail, String password, Boolean admin, LocalDateTime creationDate, LocalDateTime updateDate) {
 		this.id = id;
 		this.name = name;
 		this.mail = mail;
 		this.password = password;
+		this.admin = admin;
 		this.creationDate = creationDate;
 		this.updateDate = updateDate;
 		this.points = 10L;
@@ -173,6 +176,18 @@ public class User implements Serializable, Comparable<User> {
 
 	private void setPoints(Long points) {
 		this.points = points;
+	}
+
+	public Boolean isAdmin() {
+		return admin;
+	}
+
+	public void updateAdmin(Boolean admin) {
+		this.setAdmin(admin);
+	}
+
+	private void setAdmin(Boolean admin) {
+		this.admin = admin;
 	}
 
 	public List<Post> getPosts() {

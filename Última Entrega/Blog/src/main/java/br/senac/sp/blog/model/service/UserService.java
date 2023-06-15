@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.transaction.Transactional;
+
+import br.senac.sp.blog.model.security.implementation.PasswordEncoderImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,10 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
-	
+
+	@Autowired
+	private PasswordEncoderImplementation passwordEncoderImplementation;
+
 	public List<User> get(){
 		return userRepository.findAll();
 	}
@@ -32,6 +37,7 @@ public class UserService {
 		newUser.updateCreationDate(LocalDateTime.now());
 		newUser.updateUpdateDate(LocalDateTime.now());
 		newUser.updatePoints(10L);
+		newUser.updatePassword(this.passwordEncoderImplementation.getPasswordEncoder().encode(newUser.getPassword()));
 		return userRepository.save(newUser);
 	}
 
